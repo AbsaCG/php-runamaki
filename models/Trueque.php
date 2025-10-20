@@ -162,6 +162,33 @@ class Trueque {
             $this->registrarTransaccion($trueque['usuario_ofrece_id'], $puntos, 'ganado', 'Trueque completado', $id);
             
             $this->conn->commit();
+            // Después de completar, asignar logros automáticos al usuario que ofreció
+            try {
+                require_once ROOT_PATH . '/models/Logro.php';
+                require_once ROOT_PATH . '/models/Usuario.php';
+
+                $logroModel = new Logro();
+                $usuarioModel = new Usuario();
+
+                // Obtener estadisticas actualizadas
+                $estad = $usuarioModel->obtenerEstadisticas($trueque['usuario_ofrece_id']);
+                $totalCompleted = (int)($estad['trueques_completados'] ?? 0);
+
+                // Mapeo de hitos a ids de logros ya definidos en schema.sql
+                // Suponemos que los logros fueron insertados en el schema y sus ids están en el orden:
+                // 1 = Primer Trueque, 2 = 10 Trueques, 3 = 50 Trueques, 4 = 100 Trueques
+                $hitos = [1 => 1, 10 => 2, 50 => 3, 100 => 4];
+
+                foreach ($hitos as $need => $logroId) {
+                    if ($totalCompleted >= $need) {
+                        // Intentar asignar (si ya existe la constraint UNIQUE, la función manejará el caso)
+                        $logroModel->asignarAUsuario($trueque['usuario_ofrece_id'], $logroId);
+                    }
+                }
+            } catch (Exception $e) {
+                // No impedir la ejecución principal si falla la asignación de logros
+            }
+
             return true;
             
         } catch (Exception $e) {
