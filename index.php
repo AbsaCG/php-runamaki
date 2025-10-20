@@ -151,10 +151,12 @@ try {
             view('errors/404');
             break;
     }
+    // Manejo de excepciones (errores del sistema)
 } catch (Exception $e) {
     if (DEBUG_MODE) {
         die("Error: " . $e->getMessage());
     } else {
+        // Muestra página genérica de error 500
         view('errors/500');
     }
 }
