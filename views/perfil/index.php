@@ -80,12 +80,12 @@ if ($estadisticas === false || $estadisticas === null) {
                     <?php if (empty($misLogros)): ?>
                         <div class="text-sm text-muted">Aún no has obtenido logros.</div>
                     <?php else: ?>
-                        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                        <div class="achievements-list" aria-label="Listado de logros">
                             <?php foreach ($misLogros as $l): ?>
-                                <div style="display:flex; align-items:center; gap:0.5rem;">
+                                <div class="achievement-item" title="<?= e($l['nombre']) ?> - <?= e($l['descripcion']) ?>">
                                     <div style="font-size:1.25rem; width:36px; text-align:center;"><?= e($l['icono'] ?? '🏅') ?></div>
                                     <div style="flex:1;">
-                                        <div style="font-weight:600;"><?= e($l['nombre']) ?></div>
+                                        <div style="font-weight:600; font-size:0.95rem;"><?= e($l['nombre']) ?></div>
                                         <div class="text-sm text-muted">Obtenido: <?= date('d M Y', strtotime($l['fecha_obtencion'])) ?></div>
                                     </div>
                                 </div>
