@@ -286,6 +286,51 @@ a:hover {
     gap: 1.5rem;
 }
 
+/* Perfil: layout responsive para sidebar y contenido principal */
+.profile-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.profile-sidebar {
+    width: 100%;
+}
+
+.profile-main {
+    width: 100%;
+}
+
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 1rem;
+}
+
+.profile-achievement {
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+}
+
+@media (max-width: 992px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+        order: 1;
+    }
+
+    .profile-main {
+        order: 2;
+    }
+}
+
 .grid-cols-2 {
     grid-template-columns: repeat(2, 1fr);
 }
