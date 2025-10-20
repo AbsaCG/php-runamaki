@@ -40,14 +40,14 @@ if ($estadisticas === false || $estadisticas === null) {
         <p class="text-muted">Gestiona tu información personal y estadísticas</p>
     </div>
 
-    <div class="grid" style="grid-template-columns: 1fr 2fr; gap: 2rem;">
+    <div class="profile-grid">
         <!-- Sidebar - Info del Usuario -->
-        <div>
+        <aside class="profile-sidebar">
             <div class="card text-center">
                 <img 
                     src="https://ui-avatars.com/api/?name=<?= urlencode($usuario['nombre'] ?? 'Invitado') ?>&background=C86F3C&color=fff&size=150" 
                     alt="Avatar" 
-                    style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 1rem;"
+                    class="profile-avatar"
                 >
                 <h2><?= e($usuario['nombre'] ?? 'Invitado') ?></h2>
                 <p class="text-muted"><?= e($usuario['email'] ?? '') ?></p>
@@ -212,10 +212,10 @@ if ($estadisticas === false || $estadisticas === null) {
                     </div>
                 </div>
             </div>
-        </div>
+        </aside>
 
         <!-- Contenido Principal -->
-        <div>
+        <main class="profile-main">
             <!-- Estadísticas -->
             <div class="card" style="margin-bottom: 2rem;">
                 <h3 style="margin-bottom: 1.5rem;">📊 Estadísticas</h3>
@@ -346,7 +346,99 @@ if ($estadisticas === false || $estadisticas === null) {
                     </button>
                 </form>
             </div>
-        </div>
+
+            <!-- Editar Perfil -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h3>✏️ Editar Información</h3>
+                </div>
+
+                <form action="index.php?page=perfil-actualizar" method="POST">
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">Nombre Completo</label>
+                        <input 
+                            type="text" 
+                            id="nombre" 
+                            name="nombre" 
+                            class="form-input" 
+                            value="<?= e($usuario['nombre']) ?>"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input" 
+                            value="<?= e($usuario['email']) ?>"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ubicacion" class="form-label">Ubicación</label>
+                        <input 
+                            type="text" 
+                            id="ubicacion" 
+                            name="ubicacion" 
+                            class="form-input" 
+                            value="<?= e($usuario['ubicacion']) ?>"
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Guardar cambios
+                    </button>
+                </form>
+            </div>
+
+            <!-- Cambiar Contraseña -->
+            <div class="card" style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1.5rem;">🔒 Cambiar Contraseña</h3>
+                <form action="index.php?page=perfil-cambiar-password" method="POST">
+                    <div class="form-group">
+                        <label for="password_actual" class="form-label">Contraseña Actual</label>
+                        <input 
+                            type="password" 
+                            id="password_actual" 
+                            name="password_actual" 
+                            class="form-input" 
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_nueva" class="form-label">Nueva Contraseña</label>
+                        <input 
+                            type="password" 
+                            id="password_nueva" 
+                            name="password_nueva" 
+                            class="form-input" 
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirmar" class="form-label">Confirmar Nueva Contraseña</label>
+                        <input 
+                            type="password" 
+                            id="password_confirmar" 
+                            name="password_confirmar" 
+                            class="form-input" 
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary">
+                        Cambiar contraseña
+                    </button>
+                </form>
+            </div>
+        </main>
     </div>
 </div>
 
